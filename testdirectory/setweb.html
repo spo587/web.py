@@ -7,8 +7,9 @@ $def with (name,variable)
 <body>
 
 
-<img src='static/setcards/0.JPG' />
-<img src='static/setcards/1.JPG' />
+
+
+
 <img src='static/setcards/2.JPG' />
 <br />
 <img src='static/setcards/3.JPG' />
@@ -17,10 +18,40 @@ $def with (name,variable)
 <br>
 
 $code:
+	
 	def function(x):
 		return x+5
+		
+	def randomfunction(y):
+		return random.random()*y
+
+some shit to type 
+
+
+
+
+
+
+
+	
 
 $function(9)
+
+$code:
+	def f(x):
+		return x
+	
+	y=10
+
+$if y < 20:
+	$y
+	
+$if y>20:
+	<img src='static/setcards/0.JPG' />
+	
+$if y<20:
+	<img src='static/setcards/5.JPG' />
+	
 <br />
 $ x = 5
 $def testf(variable):
@@ -30,7 +61,8 @@ $testf(x)
 	
 <br />
 	
-$variable
+$testf(x)
+	
 
 	
 </body>

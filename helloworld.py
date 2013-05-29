@@ -1,14 +1,23 @@
 import web
+import random
+import math
 
-render = web.template.render('templates/')
+render = web.template.render('testdirectory/')
 urls = (
-	'/', 'boom'
+	'/', 'boom','tatas'
 )
 
-class boom:
+
+		
+class tatas:
 	def GET(self):
-		i = web.input(name=None)
+		i=web.input(name=None)
 		return render.index(i.name,'test')
+		
+	
+		
+
+	
 
 if __name__ == "__main__":
 	app = web.application(urls, globals())
