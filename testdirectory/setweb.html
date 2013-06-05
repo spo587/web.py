@@ -1,68 +1,83 @@
-$def with (name,variable)
+$def with (printboard, numsetsonboard, printthesets)
 
 <html>
 <head>
 	<link rel="stylesheet" href='/static/helloworld.css' />
 </head>
 <body>
-
-
-
-
-
-<img src='static/setcards/2.JPG' />
-<br />
-<img src='static/setcards/3.JPG' />
-<img src='static/setcards/4.JPG' />
-<img src='static/setcards/5.JPG' />
-<br>
-
-$code:
 	
-	def function(x):
-		return x+5
+
+	
+$for cardnumber in printboard[0:3]:
+	<img src=$cardnumber>
+
+<br />
+
+$for cardnumber in printboard[3:6]:
+	<img src=$cardnumber>
+
+<br />
+
+$for cardnumber in printboard[6:9]:
+	<img src=$cardnumber>
+	
+<br />
+
+$for cardnumber in printboard[9:12]:
+	<img src=$cardnumber>
+
+
+<br><br/><br><br/><br><br/><br><br/><br><br/><br><br/><br><br/><br><br/><br><br/><br><br/>
+
+$numsetsonboard
+<br/><br><br/><br><br/><br><br/>
+
+$if len(printthesets) == 0:
+	deadboard!!!
+	
+$if len(printthesets) > 0:
+	$for number in printthesets[0:3]:
+		<img src=$number>
+<br/>
+
+$if len(printthesets) > 3:
+	$for number in printthesets[3:6]:
+		<img src=$number>
 		
-	def randomfunction(y):
-		return random.random()*y
+<br/>
 
-some shit to type 
+$if len(printthesets) > 6:
+	$for number in printthesets[6:9]:
+		<img src=$number>
+		
+<br/>
 
+$if len(printthesets) > 9:
+	$for number in printthesets[9:12]:
+		<img src=$number>
+		
+<br/>
 
+$if len(printthesets) > 12:
+	$for number in printthesets[12:15]:
+		<img src=$number>
+		
+<br/>
 
-
-
+$if len(printthesets) > 15:
+	$for number in printthesets[15:18]:
+		<img src=$number>
+		
 
 
 	
 
-$function(9)
 
-$code:
-	def f(x):
-		return x
 	
-	y=10
 
-$if y < 20:
-	$y
 	
-$if y>20:
-	<img src='static/setcards/0.JPG' />
-	
-$if y<20:
-	<img src='static/setcards/5.JPG' />
-	
-<br />
-$ x = 5
-$def testf(variable):
-	$variable
-	
-$testf(x)
-	
-<br />
-	
-$testf(x)
-	
+
+
 
 	
 </body>

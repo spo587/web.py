@@ -1,0 +1,54 @@
+$def with (name,variable)
+
+<html>
+<head>
+	<link rel="stylesheet" href='/static/helloworld.css' />
+</head>
+<body>
+
+
+
+
+<img src='static/setcards/1.JPG' />
+<img src='static/setcards/2.JPG' />
+<br />
+<img src='static/setcards/3.JPG' />
+<img src='static/setcards/4.JPG' />
+<img src='static/setcards/5.JPG' />
+<br>
+
+$code:
+	def function(x):
+		return x+5
+
+$function(9)
+
+$code:
+	def f(x):
+		return x
+	
+	y=10
+
+$if y < 20:
+	$y
+	
+$if y>20:
+	<img src='static/setcards/0.JPG' />
+	
+$if y<20:
+	<img src='static/setcards/5.JPG' />
+	
+<br />
+$ x = 5
+$def testf(variable):
+	$variable
+	
+$testf(x)
+	
+<br />
+	
+	
+
+	
+</body>
+</html>

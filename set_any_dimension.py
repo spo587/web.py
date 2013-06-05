@@ -23,6 +23,34 @@ def isset(card1,card2,card3):
         if (card1.printcard()[i]+card2.printcard()[i]+card3.printcard()[i])%3==0:
             ans+=1
     return ans==len(card1.printcard())
+    
+def issuperset(card1,card2,card3,card4):
+    assert len(card1.printcard()) == 4
+    for i in range(4):
+        num1 = card1.printcard()[i]
+        num2 = card2.printcard()[i]
+        num3 = card3.printcard()[i]
+        num4 = card4.printcard()[i]
+        if num2 == num1 and num3 == num1:
+            if num4 != num1:
+                return False
+        elif num2 == num1 and num3 != num1:
+            if num4 == num1 or num4 == num3:
+                return False
+        elif num2 != num1 and num3 == num1:
+            if num4 != num2:
+                return False
+        elif num2 != num1 and num3 == num2:
+            if num4 != num1:
+                return False
+        elif num2 != num1 and num3 != num2 and num3 != num1:
+            if num4 != num3:
+                return False
+    return True
+    
+
+    
+    
 
 def settype((card1,card2,card3)):
     '''a function to determine the number of differences in a given a set'''
@@ -102,7 +130,7 @@ def threecardcombos(numcardsonboard):
 
 
 def fourcardcombos(numcards):
-    '''samesies for four cards. we'll want this for superset later'''
+    '''samesies for four cards. we'll want this for superset'''
     listoffourcardcombos=[]
     for i in range(numcards-3):
         for j in range(i+1,numcards-2):
@@ -225,13 +253,24 @@ class board(object):
     ## this might be unnecessary
 
     def printsetsonboard(self):
+        listofsets = []
         for t in threecardcombos(len(self.cardsonboard)):
             if isset(self.cardsonboard[t[0]],self.cardsonboard[t[1]],self.cardsonboard[t[2]]) is True:
-                print 'set!'
-                print self.cardsonboard[t[0]]
-                print self.cardsonboard[t[1]]
-                print self.cardsonboard[t[2]]
-        
+                # print 'set!'
+                #                                                 print self.cardsonboard[t[0]].printcard()
+                #                                                 print self.cardsonboard[t[1]].printcard()
+                #                                                 print self.cardsonboard[t[2]].printcard()
+                listofsets += [cardmapping(self.cardsonboard[t[0]]),cardmapping(self.cardsonboard[t[1]]),cardmapping(self.cardsonboard[t[2]]),]
+        return listofsets
+    
+    def printsupersetsonboard(self):
+        listofsupersets = []
+        for t in fourcardcombos(len(self.cardsonboard)):
+            
+            if issuperset(self.cardsonboard[t[0]],self.cardsonboard[t[1]],self.cardsonboard[t[2]],self.cardsonboard[t[3]]) is True:
+                
+                listofsupersets += [cardmapping(self.cardsonboard[t[0]]),cardmapping(self.cardsonboard[t[1]]),cardmapping(self.cardsonboard[t[2]]),cardmapping(self.cardsonboard[t[3]]),]
+        return listofsupersets
     ## what cards are on the current board
     def printboard(self):
         for i in range(len(self.cardsonboard)):
@@ -257,7 +296,9 @@ class board(object):
         return (ans,tries)
 
     
-      
+testboard = board(4)
+testboard.dealboard(12)
+print testboard.printsupersetsonboard()  
          
 def randomdealdeadboards(numcards,numtrials,dimension,dimensionlist=dimensionlistdefault):
     
