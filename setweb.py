@@ -13,8 +13,6 @@ urls = (
     '/new','new'
 )
 
-    
-    
 def printcards(board):
     testlist=[]
     for i in range(len(board.cardsonboard)):
@@ -22,9 +20,6 @@ def printcards(board):
     for i in range(len(testlist)):
         testlist[i] = 'static/setcards/' + str(testlist[i]) + '.JPG'
     return testlist
-
-
-
 
 def printallsets(board):
     setlist = board.printsetsonboard()
@@ -72,9 +67,6 @@ class new:
         
         return render.biggerboard(printboard, numsetsonboard, printthesets)
         
-        
-        
-        
 class boom:
     def GET(self):
         newboard2 = set_any_dimension.board(4)
@@ -84,11 +76,6 @@ class boom:
         numsupersetsonboard = numsupersets(newboard2)
         
         return render.supersetweb(printboard,printthesupersets, numsupersetsonboard)
-        
-        
-                
-
-    
 
 if __name__ == "__main__":
     app = web.application(urls, globals())
