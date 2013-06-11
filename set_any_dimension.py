@@ -4,14 +4,11 @@ import random
 
 ## this is set up to play setgames of different types corresponding to different numbers of card attributes or different 'dimensions'
 
-## the function toward the bottom, "deadboards", is the one that doesn't seem to quite be working, but it's a problem with a function in
-## board class (detectsetandremoveadvanced). what the d???? it works really well for a while, but then a random game
-## always derails it. lil help??
 
 class card(object):
     def __init__(self,attributes):
         '''attributes is a tuple of length=card dimension'''
-        self.attributes=attributes
+        self.attributes = attributes
     def getdimension(self):
         return len(self.attributes)
     def printcard(self):
@@ -23,6 +20,32 @@ def isset(card1,card2,card3):
         if (card1.printcard()[i]+card2.printcard()[i]+card3.printcard()[i])%3==0:
             ans+=1
     return ans==len(card1.printcard())
+    
+def makeset(card1,card2):
+    dimension = card1.getdimension()
+    attributes = []
+    
+    masterlisttuple = (0,1,2)
+    for i in range(dimension):
+        masterlist = []
+        for j in range(3):
+            masterlist.append(masterlisttuple[i])
+        current1 = card1.attributes[i] 
+        current2 = card2.attributes[i]
+        currentlist = [current1,current2]
+        
+    
+        if curent1 == current2:
+             attributes.append(current1)
+        else:
+            masterlist.remove(current1)
+            masterlist.remove(current2)
+            attributes.append(masterlist[0])
+    card3 = card(attributes)
+    return card3    
+            
+    
+    
     
 def issuperset(card1,card2,card3,card4):
     assert len(card1.printcard()) == 4
@@ -61,11 +84,7 @@ def settype((card1,card2,card3)):
             numdiffs+=1
     return numdiffs
     
-##card1=card((1,3,2))
-##card2=card((0,2,2))
-##card3=card((2,1,2))
-##
-##print settype((card1,card2,card3))
+
 
 def twodmastercardlist():
     '''creates a list of all nine 9 two dimensional cards'''
@@ -75,35 +94,35 @@ def twodmastercardlist():
             mastercardlist.append(card((i,j)))
     return mastercardlist
 
-##print twodmastercardlist()   
+  
     
 def threedmastercardlist():
     '''list of all 27 three d cards'''
-    threedmastercardtuple=[]
+    threedmastercardlist=[]
     for i in range(3):
         for j in range(3):
             for t in range(3):
             
-                threedmastercardtuple+=[card((i,j,t)),]
-    return threedmastercardtuple
+                threedmastercardlist+=[card((i,j,t)),]
+    return threedmastercardlist
 
 def fourdmastercardlist():
-    '''list of all 81 4-d cards'''
-    fourdmastercardtuple=[]
+    '''list of all 81 4-d cards, for a standard game'''
+    fourdmastercardlist=[]
     for i in range(3):
             for j in range(3):
                 for t in range(3):
                     for n in range(3):
-                        fourdmastercardtuple+=[card((n,t,j,i)),]
+                        fourdmastercardlist+=[card((n,t,j,i)),]
     #random.shuffle(fourdmastercardtuple)
-    return fourdmastercardtuple
+    return fourdmastercardlist
 
 
 def cardmapping(card):
     '''converts each card to a number 0-80'''
     return card.attributes[0] + 3*card.attributes[1] + 9*card.attributes[2] + 27*card.attributes[3]
 
-## build the image list mapping
+## build the image list mapping for the web game
 def print_src_list():
     src_list=[]
     for card in fourdmastercardlist():
@@ -145,7 +164,7 @@ def fourcardcombos(numcards):
 
 
 class board(object):
-    def __init__(self,dimension,dimensionlist=dimensionlistdefault,cardsonboard=None,cardsremoved=None):
+    def __init__(self,dimension,dimensionlist = dimensionlistdefault,cardsonboard = None,cardsremoved = None):
         ## each of the inputs is a list, but except for the dimension
         ## each game board will start with empty lists
         ## dimensionlist will be a global list that we'll input
@@ -154,9 +173,9 @@ class board(object):
         
         if cardsremoved == None:
             self.cardsremoved = []
-        self.dimension=dimension
-        self.dimensionlist=dimensionlist
-        self.mastercardlist=dimensionlist[self.dimension-2]
+        self.dimension = dimension
+        self.dimensionlist = dimensionlist
+        self.mastercardlist = dimensionlist[self.dimension-2]
         self.cardlist=[]
         ## shuffle the cardlist at the beginning of each game
         for i in range(len(self.mastercardlist)):
@@ -164,21 +183,22 @@ class board(object):
         random.shuffle(self.cardlist)
               
         
-        self.cardsremoved=cardsremoved
+        self.cardsremoved = cardsremoved
     def dealboard(self,numcards):
         '''a random deal that adds numcards cards to the existing board'''
         for i in range(numcards):
-            selectedcard=random.choice(self.cardlist)
+            selectedcard = random.choice(self.cardlist)
             self.cardsonboard.append(selectedcard)
             self.cardlist.remove(selectedcard)
    
     def clearboard(self):
-        self.cardsonboard=[]
+        self.cardsonboard = []
 
     def dealboardnonrandom(self,cards):
-        '''adds the cards in the list to the existing board
-        cards=list of cards'''
-        self.cardsonboard+=cards
+        '''
+        adds the cards in the list to the existing board
+        cards=list of specific cards'''
+        self.cardsonboard += cards
         
 
     def dealnextcards(self,numcards):
@@ -199,9 +219,9 @@ class board(object):
     def detectsetandremove(self):
         for t in threecardcombos(len(self.cardsonboard)):
 
-            card1=self.cardsonboard[t[0]]
-            card2=self.cardsonboard[t[1]]
-            card3=self.cardsonboard[t[2]]
+            card1 = self.cardsonboard[t[0]]
+            card2 = self.cardsonboard[t[1]]
+            card3 = self.cardsonboard[t[2]]
             
             if isset(card1,card2,card3) is True:
                 
@@ -216,12 +236,12 @@ class board(object):
                 self.cardsonboard.remove(card1)
                 self.cardsonboard.remove(card2)
                 self.cardsonboard.remove(card3)
-                self.cardsremoved+=[card1,card2,card3,]
+                self.cardsremoved += [card1,card2,card3,]
                 
                 break
 
     def detectsetandremoveadvanced(self):
-        '''removes the set of lowest number of differences instead of the first set detected'''
+        '''removes sets preferentially with the lowest number of differences instead of the first set detected'''
         i=1
         while i<=self.dimension:
             for t in threecardcombos(len(self.cardsonboard)):
@@ -253,6 +273,7 @@ class board(object):
     ## this might be unnecessary
 
     def printsetsonboard(self):
+        '''specifies all the sets on the board'''
         listofsets = []
         for t in threecardcombos(len(self.cardsonboard)):
             if isset(self.cardsonboard[t[0]],self.cardsonboard[t[1]],self.cardsonboard[t[2]]) is True:
@@ -294,40 +315,6 @@ class board(object):
                  ans+=1
 
         return (ans,tries)
-
-    
-testboard = board(4)
-testboard.dealboard(12)
-print testboard.printsupersetsonboard()  
-         
-def randomdealdeadboards(numcards,numtrials,dimension,dimensionlist=dimensionlistdefault):
-    
-    numdeadboards=0
-    for i in range(numtrials):
-        #print 'new board'
-        board2=board([],[],dimension,dimensionlist)
-        #print board2.cardlist
-        board2.dealboard(numcards)
-        #board2.printboard()
-        
-        if board2.isthereaset() is False:
-            #print 'deadboard!!'
-            numdeadboards+=1
-            print board2.printboard()
-    return numdeadboards
-
-##board1=board([],[],2,dimensionlist)
-##for i in range(len(board1.cardlist)):
-##    print board1.cardlist[i].printcard()
-##board1.dealnextcards(4)
-##print board1.cardsonboard
-##print board1.printboard()
-##
-##
-##print board1.allpossfourcarddealstwod()
-##
-##
-##print randomdealdeadboards(9,10000,3,dimensionlist)
 
 def playgame(dimension,detectiontype):
     '''function to play a game with cards of specified dimension and detection type
@@ -378,9 +365,27 @@ def playgame(dimension,detectiontype):
     print len(board1.cardlist)
     print 'number of sets=',numsets
     print 'number of deadboards=',deadboards
-    return deadboards
+    return deadboards  
 
-#print playgame(4,dimensionlist,'complex')
+## below, some functions to test some statistics/mathy stuff   
+         
+def randomdealdeadboards(numcards,numtrials,dimension,dimensionlist=dimensionlistdefault):
+    
+    numdeadboards=0
+    for i in range(numtrials):
+        #print 'new board'
+        board2=board([],[],dimension,dimensionlist)
+        #print board2.cardlist
+        board2.dealboard(numcards)
+        #board2.printboard()
+        
+        if board2.isthereaset() is False:
+            #print 'deadboard!!'
+            numdeadboards+=1
+            print board2.printboard()
+    return numdeadboards
+
+
 
 def deadboards(numgames,detectiontype):
     '''returns a list with the number of deadboards in a number of games of a certain type'''

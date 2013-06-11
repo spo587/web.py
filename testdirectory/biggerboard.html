@@ -1,4 +1,4 @@
-$def with (printboard, numsetsonboard, printthesets, newboard)
+$def with (printboard, numsetsonboard, printthesets)
 
 <html>
 <head>
@@ -13,11 +13,6 @@ $def with (printboard, numsetsonboard, printthesets, newboard)
 img.hidden {visibility:hidden;}
 </style>
 
-
-
-
-
-<button type="button" id="morecards" onclick="window.location='http://0.0.0.0:8080/new';">More Cards </button>
 
 $ y = numsetsonboard
 
@@ -45,6 +40,7 @@ $else:
 <br>
 
 	
+
 
 $for row in range(len(printboard)/3):
 	$for cardnumber in printboard[row*3:row*3+3]:
