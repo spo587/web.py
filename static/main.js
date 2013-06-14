@@ -1,4 +1,5 @@
 
+
 var cardsSelected = []
 
 $(document).ready(function(){
@@ -20,12 +21,18 @@ $(document).ready(function(){
         $('#change3').attr("src",hidden3);
     });
     
-    $('.settile').on('click', function(){
-        this.addClass('selected');
+    $('.settile').click( function(){
+        $(this).addClass('selected');
         cardsSelected.push(this);
-        if(cardsSelected.length == 3){
-            $.get('./checkcards',
-                cardsSelected,
+        console.log(cardsSelected)
+        if (cardsSelected.length == 3){
+            var cards = {}
+            for (var i=0; i<cardsSelected.length;i++){
+                cards[i] = $(cardsSelected[i]).attr("src").slice(16,-4)
+            }
+            
+            $.get('/checkcards',
+                cards,
                 function(data){
                     if(data == 'true'){
                         alert('Congrats! You found a set!');

@@ -8,9 +8,10 @@ render2 = web.template.render('templates/')
 
 render = web.template.render('testdirectory/')
 urls = (
-    '/boom', 'boom',
+    '/set', 'set',
     '/town', 'town',
-    '/new','new'
+    '/new','new',
+    '/checkcards','checkcards'
 )
 
 def printcards(board):
@@ -40,11 +41,11 @@ def numsupersets(board):
       
 newboard = None
 
-class town:
+class set:
     def GET(self):
         global newboard
         newboard = set_any_dimension.board(4)
-        newboard.dealboard(12)
+        newboard.dealcards(12)
         
         printboard = printcards(newboard)
         printthesets = printallsets(newboard)
@@ -56,9 +57,22 @@ class town:
         
         return render.setweb(printboard, numsetsonboard, printthesets, newboard)
         
+class checkcards:
+    def GET(self):
+        cardIds = web.input()
+        print cardIds
+        cards = []
+        for i in range(3):
+            cards.append(set_any_dimension.reversecardmapping(cardIds[i]))
+            
+            
+        if set_any_dimension.isset(cards[0],cards[1],cards[2]):
+            return 'YAY!!!'
+        return 'NOOOO!!!'
+        
 class new:
     def GET(self):
-        newboard.dealboard(3)
+        newboard.dealcards(3)
         printboard = printcards(newboard)
         printthesets = printallsets(newboard)
         numsetsonboard = newboard.numsetsonboard()
@@ -70,7 +84,7 @@ class new:
 class boom:
     def GET(self):
         newboard2 = set_any_dimension.board(4)
-        newboard2.dealboard(12)
+        newboard2.dealcards(12)
         printboard = printcards(newboard2)
         printthesupersets = printallsupersets(newboard2)
         numsupersetsonboard = numsupersets(newboard2)
