@@ -371,4 +371,5 @@ def average(x):
     return sum(x)/float(len(x))
     
     
-playgame(4,'simple')
+if __name__ == '__main__':
+    playgame(4,'simple')
