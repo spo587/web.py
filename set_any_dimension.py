@@ -23,25 +23,24 @@ def isset(card1,card2,card3):
     
 def makeset(card1,card2):
     '''given two cards, determine the card needed to make a set'''
-    dimension = card1.getdimension()
+    dimemsion = card1.getdimension()
     attributes = []
     
-    masterlisttuple = (0,1,2)
+    masterset = set(0, 1, 2)
+    
     for i in range(dimension):
-        masterlist = []
-        for j in range(3):
-            masterlist.append(masterlisttuple[i])
+        used_elements = set()
         current1 = card1.attributes[i] 
         current2 = card2.attributes[i]
-        currentlist = [current1,current2]
-        
+        used_elements.add(current2)   
+        used_elements.add(current1)
     
-        if curent1 == current2:
+        if len(usedelements) == 1:
              attributes.append(current1)
         else:
-            masterlist.remove(current1)
-            masterlist.remove(current2)
-            attributes.append(masterlist[0])
+            attributes.append(set.difference(masterset, used_elements))
+
+        
     card3 = card(attributes)
     return card3    
             
